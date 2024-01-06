@@ -9,16 +9,16 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 mongoose
-  .connect(
-    "mongodb+srv://DevLam:O8AkhlZfMtX0Dfic@cluster0.pnhzoxr.mongodb.net/?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.MONGO_DB_CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(async () => {
     console.log("Connected to Database");
 
     const user = new User({
-      username: "DevLam",
-      password: "O8AkhlZfMtX0Dfic"
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD
     });
 
     await user.save();
@@ -30,3 +30,8 @@ mongoose
   .catch((err) => {
     console.log("Database connection failed", err.toString());
   });
+
+mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
