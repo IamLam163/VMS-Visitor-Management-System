@@ -15,15 +15,15 @@ const Hero = () => {
         initial: {
             transition: {
                 ease: "easeInOut",
-            }
+            },
         },
         animate: {
             y: [0, 10, 0],
             transition: {
                 ease: "linear",
                 repeat: Infinity,
-                duration: 1
-            }
+                duration: 1,
+            },
         },
         hover: {
             y: 10,
@@ -32,7 +32,7 @@ const Hero = () => {
                 duration: 0.4,
             },
         },
-    }; 
+    };
 
     const spinArrow = {
         initial: {
@@ -58,7 +58,7 @@ const Hero = () => {
     };
 
     return (
-        <div className="relative hero min-h-[80vh] mb-24">
+        <div className="hero relative mb-24 min-h-[80vh]">
             <div className="hero-content">
                 <motion.div className="max-w-md overflow-y-hidden">
                     <motion.h1 className="text-4xl font-bold">
@@ -66,13 +66,12 @@ const Hero = () => {
                         <motion.span className="text-secondary">
                             Beyond
                         </motion.span>{" "}
-                        The Lobby{" "}
+                        Manual Registration{" "}
                         <motion.span className="text-primary">.</motion.span>
                     </motion.h1>
 
                     <motion.p className="py-6">
-                        Get there with the leading system in intelligent visitor
-                        management.
+                        Intelligent Visitor Management System.
                     </motion.p>
                     <Link
                         href={
@@ -99,8 +98,14 @@ const Hero = () => {
                     </Link>
                 </motion.div>
             </div>
-            <motion.div variants={scrollArrow} initial="initial" whileHover="hover" animate="animate" className="absolute bottom-[30px] md:bottom-[10px] left-[47%] mx-auto z-1">
-                <BsChevronDoubleDown className="text-xl md:text-xl lg:text-2xl"/>
+            <motion.div
+                variants={scrollArrow}
+                initial="initial"
+                whileHover="hover"
+                animate="animate"
+                className="z-1 absolute bottom-[30px] left-[47%] mx-auto md:bottom-[10px]"
+            >
+                <BsChevronDoubleDown className="text-xl md:text-xl lg:text-2xl" />
             </motion.div>
         </div>
     );

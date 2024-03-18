@@ -48,9 +48,7 @@ const VisitorCard = ({ name, email, numInvites }) => {
                         <h3 className="text-lg font-bold capitalize text-secondary">
                             {name}
                         </h3>
-                        <p className="text-xs text-neutral-content lg:text-sm">
-                            {email}
-                        </p>
+                        <p className="text-xs lg:text-sm">{email}</p>
                     </div>
                 </div>
                 <button

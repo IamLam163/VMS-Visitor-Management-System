@@ -31,7 +31,7 @@ const Home = () => {
                         </p>
                         <div className="divider"></div>
                         <p>
-                            <b>ASFALEAI</b> aims to provide a simple and modern
+                            <b>FIRS VMS</b> aims to provide a simple and modern
                             interface where residents, receptionists and
                             building managers will come together to create a
                             modern residential building community.

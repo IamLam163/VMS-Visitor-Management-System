@@ -4,7 +4,7 @@ import { gql, useQuery, useApolloClient } from "@apollo/client";
 import { useRouter } from "next/router";
 
 import { BiMailSend, BiStats } from "react-icons/bi";
-import { AiFillAlert,AiFillClockCircle } from "react-icons/ai";
+import { AiFillAlert, AiFillClockCircle } from "react-icons/ai";
 import { FaBed } from "react-icons/fa";
 
 import Layout from "../components/Layout";
@@ -90,6 +90,10 @@ const VisitorDashboard = () => {
         `
     );
 
+    if (data && data.getInvites) {
+        console.log(data.getInvites);
+    }
+
     const numInvitesQuery = useQuery(
         gql`
             query {
@@ -116,7 +120,7 @@ const VisitorDashboard = () => {
         `,
         { fetchPolicy: "network-only" }
     );
-    
+
     const visitorsQuery = useQuery(
         gql`
             query {
@@ -152,7 +156,7 @@ const VisitorDashboard = () => {
 
                 setOpenInvites(newOpen);
                 setInvites(otherInviteData);
-                
+
                 setNumCancelled(numCancelled + 1);
 
                 otherInviteData.forEach((invite) => {
@@ -204,15 +208,19 @@ const VisitorDashboard = () => {
                     tempHistoryInvites.push(invite);
                 }
 
-                if(invite.inviteState === "cancelled") {
+                if (invite.inviteState === "cancelled") {
                     _numCancelled++;
                 }
-                
-                if(invite.inviteState === "inActive") {
+
+                if (invite.inviteState === "inActive") {
                     _numUnused++;
                 }
 
-                if(invite.inviteState === "signedIn" || invite.inviteState === "signedOut" || invite.inviteState === "extended") {
+                if (
+                    invite.inviteState === "signedIn" ||
+                    invite.inviteState === "signedOut" ||
+                    invite.inviteState === "extended"
+                ) {
                     _numUsed++;
                 }
 
@@ -227,7 +235,6 @@ const VisitorDashboard = () => {
             setNumCancelled(_numCancelled);
             setNumUnused(_numUnused);
             setNumUsed(_numUsed);
-            
 
             tempHistoryInvites.sort((lhs, rhs) => {
                 return new Date(rhs.inviteDate) - new Date(lhs.inviteDate);
@@ -279,9 +286,9 @@ const VisitorDashboard = () => {
 
     useEffect(() => {
         if (!curfewTimeQuery.loading && !curfewTimeQuery.error) {
-            let time = curfewTimeQuery.data.getCurfewTimeOfResident.toString()
-            while(time.length<3){
-                time = "0"+time;
+            let time = curfewTimeQuery.data.getCurfewTimeOfResident.toString();
+            while (time.length < 3) {
+                time = "0" + time;
             }
             setCurfew(time);
         }
@@ -319,7 +326,7 @@ const VisitorDashboard = () => {
                 <p>You have {todayInvites} visitors expected today.</p>
             </div>
             <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="card bg-base-200 w-full p-3 ml-2">
+                <div className="card ml-2 w-full bg-base-200 p-3">
                     <h2 className="card-title text-2xl">
                         <BiStats className="text-3xl text-primary" />
                         Invite Data
@@ -327,14 +334,9 @@ const VisitorDashboard = () => {
                     <div className="p-10 md:p-14">
                         <PieChart
                             chartRef={null}
-                            datalabels={[
-                                "Invites",
-                            ]}
+                            datalabels={["Invites"]}
                             labelvals={["Cancelled", "Used Invites"]}
-                            datavals={[
-                                numCancelled,
-                                numUsed
-                            ]}
+                            datavals={[numCancelled, numUsed]}
                         />
                     </div>
                 </div>
@@ -391,37 +393,23 @@ const VisitorDashboard = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div className="card h-full bg-base-200 p-4 pb-1 shadow">
-                        <h2 className="card-title font-bold">
-                            <span className="text-2xl text-primary">
-                                <FaBed />
-                            </span>
-                            Maximum Sleepovers Allowed
-                        </h2>
-                        <div className="card-body justify-center">
-                            <h1 className="text-4xl font-bold">
-                                {maxSleepovers}
-                            </h1>
-                            <p>per Month</p>
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        <div className="card h-full bg-base-200 p-4 pb-1 shadow">
+                            <h2 className="card-title font-bold">
+                                <span className="text-2xl text-primary">
+                                    <AiFillClockCircle />
+                                </span>
+                                Visitor Curfew
+                            </h2>
+                            <div className="card-body justify-center">
+                                <h1 className="text-5xl font-bold">
+                                    {curfew.slice(0, -2) +
+                                        " : " +
+                                        curfew.slice(-2)}
+                                </h1>
+                            </div>
+                            <div className="card-actions"></div>
                         </div>
-                        <div className="card-actions"></div>
-                    </div>
-
-                    <div className="card h-full bg-base-200 p-4 pb-1 shadow">
-                        <h2 className="card-title font-bold">
-                            <span className="text-2xl text-primary">
-                                <AiFillClockCircle />
-                            </span>
-                            Visitor Curfew
-                        </h2>
-                        <div className="card-body justify-center">
-                            <h1 className="text-5xl font-bold">
-                                {curfew.slice(0,-2)+" : "+curfew.slice(-2)}
-                            </h1>
-                        </div>
-                        <div className="card-actions"></div>
-                    </div>
                     </div>
                 </div>
                 <div className="col-span-2 grid grid-cols-1 grid-rows-2 gap-4 md:grid-cols-2 md:grid-rows-1">
@@ -432,11 +420,12 @@ const VisitorDashboard = () => {
                                     Popular Visitors
                                 </h2>
                                 {visitorsQuery.loading ? (
-                                    <progress className="progress progress-primary w-full"></progress>
+                                    <progress className="progress progress-primary w-full "></progress>
                                 ) : visitors.length === 0 ? (
                                     <p className="ml-3">Nothing to show...</p>
                                 ) : (
-                                    <div className="flex flex-col justify-center gap-3 p-1 md:p-2 lg:p-3">
+                                    <div className="flex flex-col justify-center gap-3 p-1 font-bold md:p-2 lg:p-3">
+                                        {" "}
                                         {visitors.map((visitor, idx) => {
                                             return (
                                                 <VisitorCard
@@ -626,6 +615,5 @@ export async function getStaticProps(context) {
         },
     };
 }
-
 
 export default VisitorDashboard;

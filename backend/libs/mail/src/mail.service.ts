@@ -69,8 +69,8 @@ export class MailService {
             subject: "Verify Account", // Subject line
             html: `<h1>Hello New User!👋</h1>
                 <br />
-                <h3>Thank you for choosing V Ʌ S</h3>
-                <p>Please verify your account <a href="https://vms-visitor-management-system-update.vercel.app/verify?id=${verficationID}&email=${to}">here</a>.</p>
+                <h3>Thank you for using FIRS Intelligent Vistitor Mangement System </h3>
+                <p>Please verify your account <a href="http://localhost:3000/verify?id=${verficationID}&email=${to}">here</a>.</p>
                 `,
             // <p>Please verify your account <a href="http://localhost:3000/verify?id=${verficationID}&email=${to}">here</a>.</p>
 
