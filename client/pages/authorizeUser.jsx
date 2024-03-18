@@ -96,6 +96,7 @@ const AuthorizeUser = () => {
     useEffect(() => {
         if (!loading && !error) {
             const userData = data.getUnauthorizedUsers;
+            console.log("This is data: ", data);
             const newReceptionistData = [];
             const newResidentData = [];
             const newAdminData = [];
@@ -109,7 +110,7 @@ const AuthorizeUser = () => {
                         file: data.file,
                         authorized: data.permission === 1 ? true : false,
                     });
-                } else if(data.permission === -3 || data.permission === 0) {
+                } else if (data.permission === -3 || data.permission === 0) {
                     newAdminData.push({
                         email: data.email,
                         type: "Admin",
@@ -129,7 +130,7 @@ const AuthorizeUser = () => {
                 }
             });
 
-            console.log(newAdminData);
+            console.log("NewAdmin: ", newAdminData);
             setReceptionistData(newReceptionistData);
             setResidentData(newResidentData);
             setAdminData(newAdminData);
@@ -142,7 +143,7 @@ const AuthorizeUser = () => {
 
     return (
         <Layout>
-            <div className="space-y-6 pl-3 mb-10">
+            <div className="mb-10 space-y-6 pl-3">
                 <div className="mt-3 flex w-full items-center justify-between">
                     <div className="w-full">
                         <h1 className="text-lg font-bold md:text-xl lg:text-3xl">

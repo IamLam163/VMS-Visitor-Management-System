@@ -243,6 +243,7 @@ const CreateInvite = ({ name, email, idNumber, idDocType }) => {
                             })
                             .then((res) => {
                                 if (res.data.createInvite) {
+                                    console.log(res.data.createInvite);
                                     router.push("/visitorDashboard");
                                     setShowErrorAlert(false);
                                     setSubmitting(false);
