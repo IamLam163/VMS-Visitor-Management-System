@@ -49,7 +49,7 @@ const SignUp = () => {
             router.push("/");
         }
     }, [router, verified, permission]);
-    
+
     const submitData = async (signupData, setSubmitting) => {
         const formData = new FormData();
         formData.append("file", signupData.file);
@@ -60,20 +60,22 @@ const SignUp = () => {
         formData.append("idDoc", signupData.idDoc);
         formData.append("password", signupData.password);
 
-        const response = await axios.post(`${BACKEND_URL}/user/signup`, formData, {
-            headers: {
-                'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+        const response = await axios.post(
+            `${BACKEND_URL}/user/signup`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+                },
             }
-        });
+        );
 
-        if(response.data.result) {
+        if (response.data.result) {
             verify();
             router.push("/verify?email=" + signupData.email);
         } else {
-            alert.show(
-            response.data.error,
-            {
-                type: "error"
+            alert.show(response.data.error, {
+                type: "error",
             });
         }
 
@@ -136,7 +138,7 @@ const SignUp = () => {
                                 "Password needs minimum of 8 characters with one number and one special character";
                         } else if (values.confirmPassword !== values.password) {
                             errors.confirmPassword = "Passwords do not match";
-                        } else if(!values.file) {
+                        } else if (!values.file) {
                             errors.file = "Required";
                         }
 
@@ -161,7 +163,9 @@ const SignUp = () => {
                                 onSubmit={handleSubmit}
                                 className="form-control space-y-4 rounded-xl border p-14"
                             >
-                                <h1 className="font-bold text-xl md:text-4xl">Let&apos;s Get Started ✨</h1>
+                                <h1 className="text-xl font-bold md:text-4xl">
+                                    Let&apos;s Get Started ✨
+                                </h1>
                                 <input
                                     type="email"
                                     name="email"
@@ -253,18 +257,26 @@ const SignUp = () => {
                                 </span>
 
                                 <p>Add image of yourself</p>
-                                <input data-testid="fileupload" accept="image/png, image/jpeg" id="file" name="file" type="file" onChange={(event) => {
-                                  setFieldValue("file", event.currentTarget.files[0]);
-                                }} />
+                                <input
+                                    data-testid="fileupload"
+                                    accept="image/png, image/jpeg"
+                                    id="file"
+                                    name="file"
+                                    type="file"
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "file",
+                                            event.currentTarget.files[0]
+                                        );
+                                    }}
+                                />
 
                                 <span className="text-sm text-error md:text-base">
-                                    {errors.file &&
-                                        touched.file &&
-                                        errors.file}
+                                    {errors.file && touched.file && errors.file}
                                 </span>
 
                                 <p className="text-sm md:text-lg lg:text-xl">
-                                    You are signing up as a resident
+                                    You are signing up as a staff
                                 </p>
 
                                 <motion.button
@@ -288,7 +300,6 @@ const SignUp = () => {
                         );
                     }}
                 </Formik>
-
             </div>
         </Layout>
     );

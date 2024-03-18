@@ -14,7 +14,20 @@ import UploadPopUp from "../components/UploadPopUp";
 
 const ReceptionistDashboard = () => {
     const client = useApolloClient();
-
+    {
+        /**    
+    const handleSignIn = async (invitationID, notes, signInTime) => {
+        try {
+            const { data } = await signIn({
+                variables: { invitationID, notes, signInTime },
+            });
+            console.log(`Signed in visitor with tray ID ${data.signIn.trayID}`);
+        } catch (error) {
+            console.error("Error signing in visitor:", error);
+        }
+    };
+ */
+    }
     const [searching, setSearch] = useState(false);
     const [searchName, setSearchName] = useState("");
 
@@ -73,6 +86,22 @@ const ReceptionistDashboard = () => {
     `,
         { fetchPolicy: "no-cache" }
     );
+
+    const SIGN_IN_MUTATION = gql`
+        mutation SignIn(
+            $invitationID: String!
+            $notes: String!
+            $signInTime: String!
+        ) {
+            signIn(
+                invitationID: $invitationID
+                notes: $notes
+                signInTime: $signInTime
+            ) {
+                trayID
+            }
+        }
+    `;
 
     const search = () => {
         setSearch(true);
@@ -294,7 +323,6 @@ const ReceptionistDashboard = () => {
                         <BiQrScan />
                         Scan Invite
                     </label>
-
                     <label
                         htmlFor="Upload-modal"
                         className="modal-button btn btn-secondary btn-sm gap-2 md:btn-md"
@@ -303,7 +331,7 @@ const ReceptionistDashboard = () => {
                         <FaMailBulk />
                         Bulk-SignIn
                     </label>
-
+                    {/* 
                     <label
                         htmlFor="signIn-modal"
                         className="modal-button btn btn-primary btn-sm gap-2 md:btn-md"
@@ -312,6 +340,7 @@ const ReceptionistDashboard = () => {
                         <BiFace />
                         Recognize Face
                     </label>
+                    */}
                 </div>
             </div>
 
